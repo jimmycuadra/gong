@@ -3,6 +3,7 @@ package main
 import (
   "fmt"
   "os"
+  "github.com/jimmycuadra/gong/gong"
   "github.com/jessevdk/go-flags"
 )
 
@@ -20,13 +21,25 @@ func main() {
     os.Exit(1)
   }
 
+  gong.Init()
+
   if (opts.Delete) && len(args) >= 1 {
-    fmt.Printf("Deleting key...\n")
+    gong.Delete(args[0])
   } else if len(args) >= 2 {
-    fmt.Printf("Setting key...\n")
+    gong.Set(args[0], args[1])
   } else if len(args) == 1 {
-    fmt.Printf("Getting key...\n")
+    value := gong.Get(args[0])
+    if len(value) != 0 {
+      fmt.Println(value)
+      // TODO: Copy value to clipboard.
+    }
+  } else if gong.IsEmpty() {
+    parser.WriteHelp(os.Stderr)
   } else {
-    fmt.Printf("Listing keys...\n")
+    list := gong.List()
+
+    for _, item := range list {
+      fmt.Printf("%s\n", item)
+    }
   }
 }
