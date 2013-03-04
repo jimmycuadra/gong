@@ -14,7 +14,7 @@ var (
   gongPath string
 )
 
-func Init() {
+func init() {
   usr, err := user.Current()
 
   if err != nil {

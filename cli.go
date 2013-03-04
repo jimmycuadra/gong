@@ -21,8 +21,6 @@ func main() {
     os.Exit(1)
   }
 
-  gong.Init()
-
   if (opts.Delete) && len(args) >= 1 {
     gong.Delete(args[0])
   } else if len(args) >= 2 {
